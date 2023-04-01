@@ -1,0 +1,42 @@
+
+
+
+
+
+========================================================================================================================
+========================================================================================================================
+
+
+
+
+
+
+========================================================================================================================
+========================================================================================================================
+
+Zadatak 1-1
+import openpyxl as openpyxl
+
+#ime_prezime=['Veljko Krstic','Nikola Maric','Sava Milutinovic']
+#plata=[70000,80000,150000]
+
+
+l=[line.strip() for line in open('zaposleni.txt','r')]
+
+z=[[x.split('|')[0],eval(x.split('|')[1])] for x in l]
+
+print(z)
+wb=openpyxl.Workbook()
+ws=wb.active                            #vraca aktivni sheet 
+ws.title='Naslov'
+
+ws['A1'].value='Ime i prezime'
+ws['B1'].value='Plata'
+
+j=2
+for x in z:
+    ws.cell(row=j,column=1).value=x[0]
+    ws.cell(row=j,column=2).value=x[1]
+    j=j+1
+
+wb.save(filename='zaposleni1.xlsx') 
