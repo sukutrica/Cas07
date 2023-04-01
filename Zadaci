@@ -1,10 +1,62 @@
+Zadatak 1
+import openpyxl as openpyxl
+
+wb=openpyxl.Workbook()                  #formirana klasa excel Workbook
+
+ws=wb.active                            #vraca aktivni sheet 
+ws.title='Naslov'
+
+#============Menjanje vrednosti================================
+ws['A1'].value='Ime'
+ws['A2'].value='Veljko'
+ws['B1'].value='Prezime'
+ws['B2'].value='Krstic'
+
+#============Menjanje vrednosti po kolanma======================
+ws.cell(row=3,column=1).value='Dragan'
+ws.cell(row=3,column=2).value='Danilovic'
+ws.cell(row=4,column=1).value=1225
+ws.cell(row=4,column=2).value='[Danilovic,Zoran]'
 
 
+wb.save(filename='demo1.xlsx')          #pravi i snima excel file
+========================================================================================================================
+========================================================================================================================
+Zadatak 1-1
+import openpyxl as openpyxl
 
+#ime_prezime=['Veljko Krstic','Nikola Maric','Sava Milutinovic']
+#plata=[70000,80000,150000]
+
+
+l=[line.strip() for line in open('zaposleni.txt','r')]
+
+z=[[x.split('|')[0],eval(x.split('|')[1])] for x in l]
+
+print(z)
+wb=openpyxl.Workbook()
+ws=wb.active                            #vraca aktivni sheet 
+ws.title='Naslov'
+
+ws['A1'].value='Ime i prezime'
+ws['B1'].value='Plata'
+
+j=2
+for x in z:
+    ws.cell(row=j,column=1).value=x[0]
+    ws.cell(row=j,column=2).value=x[1]
+    j=j+1
+
+wb.save(filename='zaposleni1.xlsx') 
 
 
 ========================================================================================================================
 ========================================================================================================================
+zadatak 2
+import openpyxl as openpyxl
+
+wb=openpyxl.load_workbook('demo1.xlsx') #ucitava file
+print(wb.sheetnames)                    #vraca naslove sheetova
 
 
 
@@ -40,3 +92,92 @@ for x in z:
     j=j+1
 
 wb.save(filename='zaposleni1.xlsx') 
+
+======================================================================================================================
+======================================================================================================================
+Zadatak 2-1
+import openpyxl as openpyxl
+
+wb=openpyxl.load_workbook('zaposleni.xlsx') #ucitava file
+ws=wb.active
+
+
+# ime_prezime=ws['A2'].value #uzima vrednosti iz celija
+# plata=ws['B2'].value
+
+# ime_prezime1=ws.cell(row=3,column=1).value
+# plata1=ws.cell(row=3,column=2).value
+
+
+
+# c=ws['A']               #vraća celu kolonu od A
+# d=ws['B']
+# print(c)                # C je torka sa vrednosti celije koja je celija klasa koja ne postoji u py
+# for i in c:
+#     print(i.value)
+
+# for i in range(len(c)):
+#     print(c[i].value, ": ", d[i].value)
+
+# r=ws[2] #stampa red
+# print(r)
+
+
+c=ws["A2":"B4"]
+print(c)
+for i in c:
+    print (i)
+    for j in i:
+        print(j.value)
+
+for i in c:
+    print('Ime prezime:',i[0].value)
+    print('Plata:',i[1].value)
+
+
+# print('Ime prezime:',ime_prezime)
+# print('Plata:',plata)
+
+# print('Ime prezime:',ime_prezime1)
+# print('Plata:',plata1)
+
+
+
+
+======================================================================================================================
+======================================================================================================================
+import openpyxl as openpyxl
+
+wb=openpyxl.Workbook()
+
+ws=wb.active                            #vraca aktivni sheet 
+ws.title='Cene'
+
+l=[line.strip() for line in open('proizvodi.txt','r')]
+print(l)
+z=[[x.split('|')[0],int(x.split('|')[1]),eval(x.split('|')[2])] for x in l]
+
+ws['A1'].value='Naziv'
+ws['B1'].value='kolicina'
+ws['C1'].value='Cena'
+
+j=2
+for x in z:
+    ws.cell(row=j,column=1).value=x[0]
+    ws.cell(row=j,column=2).value=x[1]
+    ws.cell(row=j,column=3).value=x[2]
+    j=j+1
+
+
+c=ws["A2":"C6"]
+for i in c:
+    print('Naziv:',i[0].value)
+    print('kolicina:',i[1].value)
+    print('cena:',i[2].value)
+    print('vrednost:',i[1].value*i[2].value)
+    print('===================================')
+    
+
+
+
+wb.save(filename='pica.xlsx')          #pravi i snima excel file
